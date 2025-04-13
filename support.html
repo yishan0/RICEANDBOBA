@@ -1,107 +1,127 @@
-{% extends "base.html" %}
-{% block content %}
+{% extends "base.html" %} {% block content %}
 
-<style> 
-.card {
+<style>
+  .card {
     border: 1px solid #ccc;
     border-radius: 5px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: transform 0.2s;
-}
-.container-left {
+  }
+  .container-left {
     margin: 50px;
     margin-left: 50px !important;
     max-width: 30rem;
-}
-.background {
+  }
+  .background {
     background-color: #f8f9fa;
-}
+  }
 </style>
 
 <div class="container-left">
-    <div class="card">
-        <div class="card-body">
-            <h5 class="card-title text-center">Support a New Musician</h5>
-            <p class="card-text text-center">Fill out the form below to support a new musician.</p>
-            <div id="alert-container"></div> <!-- Container for alert messages -->
-            <form id="supportForm">
-                <div class="form-group">
-                    <label for="email">Email address</label>
-                    <input type="email" class="form-control" id="email" name="email" placeholder="Enter email" required>
-                    <small class="form-text text-muted">We'll never share your email with anyone else.</small>
-                </div>
-                <div class="form-group mt-3">
-                    <label for="name">Your Name</label>
-                    <input type="text" class="form-control" id="name" name="name" placeholder="Your Name" required>
-                </div>
-                <div class="form-group mt-3">
-                    <label for="item">My Item</label>
-                    <textarea class="form-control" id="item" name="item" rows="3" placeholder="Enter Your Item (e.g Used Violin, New Oboe Reed)"></textarea>
-                    <small class="form-text text-muted">Please describe the quality of your item. (e.g new, used)</small>
-                </div>
-                <div class="form-group mt-3">
-                    <label for="value">Value of My Item</label>
-                    <input type="number" class="form-control" id="value" name="value" placeholder="Enter as a number without '$' symbol" required>
-                    <small class="form-text text-muted">If you don't know, put a close estimate.</small>
-                </div>
-                <div class="form-group mt-3">
-                    <label for="lf">What I am Looking For</label>
-                    <textarea class="form-control" id="lf" name="lf" placeholder="I am looking for..."></textarea>
-                    <small class="form-text text-muted">Please be as specific as possible. Leave this portion blank if you are looking to donate your item for free.</small>
-                </div>
-                <div class="form-group mt-3">
-                    <label for="info">More Information</label>
-                    <input type="text" class="form-control" id="info" name="info" placeholder="Enter more information about your item" required>
-                    <small class="form-text text-muted">Use this space to include more information about your item or specific instructions for the customer.</small>
-                </div>
-                <div class="form-check mt-3">
-                    <input type="checkbox" class="form-check-input" id="check" name="check">
-                    <label class="form-check-label" for="check">I Confirm that I am Using This Website Lawfully</label>
-                </div>
-                <button type="submit" class="btn btn-primary mt-3 w-100">Submit</button>
-            </form>
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title text-center">Support a New Musician</h5>
+      <p class="card-text text-center">
+        Fill out the form below to support a new musician.
+      </p>
+      <form id="supportForm" method="POST">
+        <div class="form-group">
+          <label for="email">Email address</label>
+          <input
+            type="email"
+            class="form-control"
+            id="email"
+            name="email"
+            placeholder="Enter email"
+            required
+          />
+          <small class="form-text text-muted"
+            >We'll never share your email with anyone else.</small
+          >
         </div>
+        <div class="form-group mt-3">
+          <label for="name">Your Name</label>
+          <input
+            type="text"
+            class="form-control"
+            id="name"
+            name="name"
+            placeholder="Your Name"
+            required
+          />
+        </div>
+        <div class="form-group mt-3">
+          <label for="item">My Item</label>
+          <textarea
+            class="form-control"
+            id="item"
+            name="item"
+            rows="3"
+            placeholder="Enter Your Item (e.g Used Violin, New Oboe Reed)"
+            required
+          ></textarea>
+          <small class="form-text text-muted"
+            >Please describe the quality of your item. (e.g new, used)</small
+          >
+        </div>
+        <div class="form-group mt-3">
+          <label for="value">Value of My Item</label>
+          <input
+            type="number"
+            class="form-control"
+            id="value"
+            name="value"
+            placeholder="Enter as a number without '$' symbol"
+            required
+          />
+          <small class="form-text text-muted"
+            >If you don't know, put a close estimate.</small
+          >
+        </div>
+        <div class="form-group mt-3">
+          <label for="lf">What I am Looking For</label>
+          <textarea
+            class="form-control"
+            id="lf"
+            name="lf"
+            placeholder="I am looking for..."
+          ></textarea>
+          <small class="form-text text-muted"
+            >Please be as specific as possible. Leave this portion blank if you
+            are looking to donate your item for free.</small
+          >
+        </div>
+        <div class="form-group mt-3">
+          <label for="info">More Information</label>
+          <input
+            type="text"
+            class="form-control"
+            id="info"
+            name="info"
+            placeholder="Enter more information about your item"
+            required
+          />
+          <small class="form-text text-muted"
+            >Use this space to include more information about your item or
+            specific instructions for the customer.</small
+          >
+        </div>
+        <div class="form-check mt-3">
+          <input
+            type="checkbox"
+            class="form-check-input"
+            id="check"
+            name="check"
+            required
+          />
+          <label class="form-check-label" for="check">
+            I Confirm that I am Using This Website Lawfully
+          </label>
+        </div>
+        <button type="submit" class="btn btn-primary mt-3 w-100">Submit</button>
+      </form>
     </div>
+  </div>
 </div>
-
-<script>
-    document.getElementById('supportForm').addEventListener('submit', function(event) {
-        event.preventDefault(); // Prevent form submission
-
-        // Clear previous alerts
-        const alertContainer = document.getElementById('alert-container');
-        alertContainer.innerHTML = '';
-
-        // Get form values
-        const email = document.getElementById('email').value.trim();
-        const name = document.getElementById('name').value.trim();
-        const item = document.getElementById('item').value.trim();
-        const value = document.getElementById('value').value.trim();
-        const lf = document.getElementById('lf').value.trim();
-        const info = document.getElementById('info').value.trim();
-        const check = document.getElementById('check').checked;
-
-        // Validate form inputs
-        if (!email || !name || !check || !item || !value || !info) {
-            const alert = document.createElement('div');
-            alert.className = 'alert alert-danger';
-            alert.textContent = 'Please fill in all fields and check the box.';
-            alertContainer.appendChild(alert);
-            return;
-        }
-
-        // Simulate successful form submission
-        const successAlert = document.createElement('div');
-        successAlert.className = 'alert alert-success';
-        successAlert.textContent = 'Form submitted successfully! Thanks for helping out.';
-        alertContainer.appendChild(successAlert);
-
-        // Reset the form after a short delay
-        setTimeout(() => {
-            document.getElementById('supportForm').reset();
-            alertContainer.innerHTML = '';
-        }, 2000);
-    });
-</script>
 
 {% endblock %}
