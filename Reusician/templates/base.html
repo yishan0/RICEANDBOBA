@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Basic Login</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet"> <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <nav class="navbar navbar-light bg-light px-4">
+        <a class="navbar-brand d-flex align-items-center" href="{% if current_user.is_authenticated %}{{ url_for('profile') }}{% else %}{{ url_for('login') }}{% endif %}">
+            <img src="{{ url_for('static', filename='media/logo.jpeg') }}" alt="Logo" width="30" height="30" class="d-inline-block align-text-top">
+            <span class="ms-2"></span>
+        </a>
+        <div class="d-flex align-items-center">
+            <a href="{{ url_for('support') }}" class="btn btn-light me-2" style="border: none;">Support a New Musician</a>
+            <a href="{{ url_for('forum') }}" class="btn btn-light me-2" style="border: none;">Forum</a>
+            {% if current_user.is_authenticated %}
+                <div class="dropdown">
+                    <button class="btn btn-light dropdown-toggle d-flex align-items-center" type="button" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false" style="border: none;">
+                        <i class="bi bi-person-circle" style="font-size: 1.5rem;"></i>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
+                        <li>
+                            <a class="dropdown-item" href="{{ url_for('placeholder') }}">
+                                <button class="btn btn-outline-primary w-100" style="border: none;">Account Settings</button>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="{{ url_for('logout') }}">
+                                <button class="btn btn-outline-danger w-100" style="border: none;">Logout</button>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            {% endif %}
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        {% block content %}{% endblock %}
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
