@@ -1,13 +1,83 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="d-flex justify-content-center align-items-center vh-100">
-  <div class="text-center">
-    <h1>About Us</h1>
-    <p class="mt-3">Welcome to our application! Learn more about us and get started by logging in or signing up.</p>
-    <div class="mt-4">
-      <a href="{{ url_for('login') }}" class="btn btn-primary me-2">Log In</a>
-      <a href="{{ url_for('signup') }}" class="btn btn-secondary">Sign Up</a>
+
+<style>
+   #blank{
+        height: 100px; /* Set a fixed height */
+        width: 100%; /* Set a fixed width */
+        background-color: transparent; /* Make the background transparent */
+   }
+    .container {
+        max-width: 1200px;
+        margin-top: 50px; /* Reduce top margin */
+        margin-bottom: 50px; /* Reduce bottom margin */
+        background-color: transparent; /* Make the container background transparent */
+    }
+    .card {
+        background-color: white; /* Make card backgrounds transparent */
+        border: 1px solid #ccc; /* Optional: Add a border for better visibility */
+    }
+    .about-image {
+        max-height: 400px; /* Reduce image height */
+        max-width: 100%; /* Ensure the image does not exceed the container width */
+        object-fit: contain; /* Ensure the image scales proportionally */
+        margin-bottom: 20px; /* Reduce space below the image */
+    }
+</style>
+
+<div class="container mt-4">
+    <!-- Large Image -->
+    <div class="text-center">
+        <img src="{{ url_for('static', filename='media/logo2.png') }}" alt="About Us" class="img-fluid rounded about-image">
     </div>
-  </div>
+
+    <!-- About Us Text -->
+    <div class="text-center mb-5">
+        <h1>About Us</h1>
+        <p class="mt-3">Reusician is a platform dedicated to connecting musicians with resources they need. Whether you're looking to donate, trade, or find musical instruments and accessories, we're here to help.</p>
+    </div>
+
+    <!-- Cards Section -->
+    <div class="row">
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Our Mission</h5>
+                    <p class="card-text">To make music accessible to everyone by promoting sustainability and community support.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Our Vision</h5>
+                    <p class="card-text">A world where every musician has the tools they need to create and share their art.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Join Us</h5>
+                    <p class="card-text">Become a part of our community and help us make a difference in the lives of musicians everywhere.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Call to Action -->
+    <div class="text-center mt-5">
+        <h2>Get Involved</h2>
+        <p class="mt-3">Ready to make an impact? Support new musicians!</p>
+        <a href="{{ url_for('signup') }}" class="btn btn-primary">Sign Up</a>
+    </div>
+    <div class="text-center mt-3">
+        <p>Already a member? <a href="{{ url_for('login') }}">Log In</a></p>
+    </div>
+
+    <p id = "blank" ></p>
+    <p></p>
+    <p></p>
 </div>
+
 {% endblock %}
