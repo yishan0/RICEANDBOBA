@@ -149,7 +149,10 @@
   </div>
   <div class="cards">
     {% for post in posts %}
-    <div class="card card-{{ loop.index % 5 + 1 }}">
+    <div
+      class="card card-{{ loop.index % 5 + 1 }}"
+      href="post/{{ post['id'] }}"
+    >
       <div class="card__icon"><i class="fas fa-bolt"></i></div>
       <p class="card__exit"><i class="fas fa-times"></i></p>
       <h2 class="card__title">
@@ -160,7 +163,7 @@
       <p><strong>Value:</strong> ${{ post['value'] }}</p>
       <p><strong>More Info:</strong> {{ post['more_info'] }}</p>
       <p class="card__apply">
-        <a class="card__link" href="#"
+        <a class="card__link" href="post/{{ post['id'] }}"
           >Contact <i class="fas fa-arrow-right"></i
         ></a>
       </p>
