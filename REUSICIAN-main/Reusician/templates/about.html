@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="d-flex justify-content-center align-items-center vh-100">
+  <div class="text-center">
+    <h1>About Us</h1>
+    <p class="mt-3">Welcome to our application! Learn more about us and get started by logging in or signing up.</p>
+    <div class="mt-4">
+      <a href="{{ url_for('login') }}" class="btn btn-primary me-2">Log In</a>
+      <a href="{{ url_for('signup') }}" class="btn btn-secondary">Sign Up</a>
+    </div>
+  </div>
+</div>
+{% endblock %}
