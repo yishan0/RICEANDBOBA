@@ -1,6 +1,6 @@
 from flask import Flask, render_template, redirect, url_for, request, flash
 from flask_login import LoginManager, login_user, logout_user, login_required, UserMixin, current_user
-from users import get_user, append_user
+from users import get_user, append_user, update_user
 import sqlite3
 app = Flask(__name__)
 app.secret_key = 'secret_key_for_demo'
@@ -8,6 +8,7 @@ app.secret_key = 'secret_key_for_demo'
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
+
 
 def get_db():
     conn = sqlite3.connect("posts.db")
@@ -27,27 +28,32 @@ def load_user(user_id):
 
 @app.route('/')
 def home():
+    
+    return render_template('about.html')
+
+@app.route('/about')
+def about():
     return render_template('about.html')
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
     if request.method == 'POST':
-        if(request.form['username'].strip() == "" or request.form['password'].strip() == ""):
+        if request.form['username'].strip() == "" or request.form['password'].strip() == "":
             flash('Please fill in all fields')
             return redirect(url_for('signup'))
   
-        if(request.form['password'].strip() != request.form['confirm_password'].strip()):
+        if request.form['password'].strip() != request.form['confirm_password'].strip():
             flash('Passwords do not match')
             return redirect(url_for('signup'))
 
-        username = request.form['username']
-        password = request.form['password']
-        if get_user(username):
+        username = request.form['username'].strip()
+        password = request.form['password'].strip()
+        
+        if get_user(username):  # Check if username already exists
             flash('Username already exists')
             return redirect(url_for('signup'))
 
         append_user(username, password)
-        # Handle signup logic here (e.g., save user to database)
         flash('Signup successful! Please log in.')
         return redirect(url_for('login'))
     return render_template('signup.html')
@@ -114,10 +120,56 @@ def forum():
     conn = get_db()
     cursor = conn.cursor()
 
-    cursor.execute("SELECT name FROM posts")
+    # Fetch all columns from the posts table
+    cursor.execute("SELECT * FROM posts")
     rows = cursor.fetchall()
     conn.close()
-    return render_template('forum.html',names=rows)
+    return render_template('forum.html', posts=rows)
+
+
+@app.route('/post/<int:id>', methods=['GET', 'POST'])
+def post(id):
+    conn = get_db()
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT * FROM posts WHERE id = ?",(id,))
+    post = cursor.fetchone()
+
+    cursor.execute("SELECT comment, name, creation_time FROM comments WHERE post_id = ? ORDER BY creation_time DESC",(id,))
+    comments = cursor.fetchall()
+
+
+    if request.method == 'POST':
+        comment = request.form.get('comment', '').strip()
+        print(current_user.id)
+        cursor.execute("INSERT INTO comments (post_id, name, comment) VALUES (?,?,?)",(id,current_user.id,comment))
+        conn.commit()
+        return redirect(f'/post/{id}')
+    
+    conn.close()
+
+
+    return render_template("post.html", post=post, comments=comments)
+
+@app.route('/update_account', methods=['POST'])
+@login_required
+def update_account():
+    new_username = request.form['username'].strip()
+    new_password = request.form['password'].strip()
+
+    if not new_username or not new_password:
+        flash('Fields cannot be empty.')
+        return redirect(url_for('placeholder'))
+
+    if new_username != current_user.id and get_user(new_username):
+        flash('Username already exists.')
+        return redirect(url_for('placeholder'))
+
+    update_user(current_user.id, new_username, new_password)
+    logout_user()  # Log out the user to clear the session
+    login_user(User(new_username))  # Log in with the new username
+    flash('Account updated successfully.')
+    return redirect(url_for('placeholder'))
 
 if __name__ == '__main__':
     app.run(debug=True)
