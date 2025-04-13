@@ -111,7 +111,13 @@ def support():
 
 @app.route('/forum')
 def forum():
-    return render_template('forum.html')
+    conn = get_db()
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT name FROM posts")
+    rows = cursor.fetchall()
+    conn.close()
+    return render_template('forum.html',names=rows)
 
 if __name__ == '__main__':
     app.run(debug=True)
