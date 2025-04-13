@@ -1,5 +1,85 @@
 {% extends "base.html" %}
 {% block content %}
-  <h2>Welcome, {{ user.id }}!</h2>
-  <p>This is your profile page.</p>
+
+<style>
+    #blank {
+        height: 100px; /* Set a fixed height */
+        width: 100%; /* Set a fixed width */
+        background-color: transparent; /* Make the background transparent */
+    }
+    .container {
+        max-width: 1200px;
+        margin-top: 50px; /* Reduce top margin */
+        margin-bottom: 50px; /* Reduce bottom margin */
+        background-color: transparent; /* Make the container background transparent */
+    }
+    .card {
+        background-color: white; /* Make card backgrounds transparent */
+        border: 1px solid #ccc; /* Optional: Add a border for better visibility */
+    }
+    .profile-image {
+        max-height: 400px; /* Reduce image height */
+        max-width: 100%; /* Ensure the image does not exceed the container width */
+        object-fit: contain; /* Ensure the image scales proportionally */
+        margin-bottom: 20px; /* Reduce space below the image */
+    }
+    .welcome-text {
+        margin-top: -10px; /* Reduce space above the welcome text */
+    }
+</style>
+
+<div class="container mt-4">
+    <!-- Large Image -->
+    <div class="text-center">
+        <img src="{{ url_for('static', filename='media/logo2.png') }}" alt="Profile Banner" class="img-fluid rounded profile-image">
+    </div>
+
+    <!-- Profile Text -->
+    <div class="text-center welcome-text">
+        <h1>Welcome, {{ current_user.id }}</h1>
+        <p class="mt-3">This is your profile page. Here you can view and manage your account details, explore your contributions, and connect with other musicians.</p>
+    </div>
+
+    <!-- Cards Section -->
+    <div class="row">
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    <h5 class="card-title">My Contributions</h5>
+                    <p class="card-text">View the items you have listed for exchange or donation.</p>
+                    <a href="{{ url_for('support') }}" class="btn btn-primary">View My Items</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Account Settings</h5>
+                    <p class="card-text">Update your account details and preferences.</p>
+                    <a href="{{ url_for('placeholder') }}" class="btn btn-secondary">Manage Account</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Explore Forum</h5>
+                    <p class="card-text">Join discussions and connect with other musicians.</p>
+                    <a href="{{ url_for('forum') }}" class="btn btn-light">Go to Forum</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Call to Action -->
+    <div class="text-center mt-5">
+        <h2>Get Involved</h2>
+        <p class="mt-3">Ready to contribute more? List your items or explore the forum!</p>
+        <a href="{{ url_for('support') }}" class="btn btn-primary">List My Items</a>
+    </div>
+</div>
+
+<p id="blank"></p>
+
+<p id="footer"> </p>
 {% endblock %}

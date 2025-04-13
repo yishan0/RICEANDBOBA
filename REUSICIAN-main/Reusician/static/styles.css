@@ -7,14 +7,17 @@ html, body {
 }
 
 body {
-  background: url('media/back.jpg') no-repeat center center;
+  background: url('media/gradient.png') no-repeat center center;
   background-size: cover;
   min-height: 100vh;
   padding-top: 50px; /* Add padding to shift everything down */
 }
 
 body:not(.login):not(.signin):not(.signup) {
-  background: white; /* Set background to white for all pages except login, signin, and signup */
+  background: url('media/gradient.png') no-repeat center center;
+  background-size: cover;
+  min-height: 100vh;
+  padding-top: 50px; /* Add padding to shift everything down */
 }
 
 
